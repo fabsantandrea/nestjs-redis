@@ -8,7 +8,6 @@ export const ConfigModuleSetup = ConfigModule.forRoot({
   load: [appConfig, redisConfig],
   isGlobal: true,
   validationSchema: Joi.object({
-    PORT: Joi.number().default(3000),
-    REDIS_URL: Joi.string().required(),
+    PORT: Joi.number().default(3000)
   }),
 });
