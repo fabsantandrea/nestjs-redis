@@ -12,7 +12,13 @@ import {
 import { Server, Socket } from 'socket.io';
 import { SocketRefreshPayload } from './socket.constant';
 
-@WebSocketGateway()
+@WebSocketGateway({
+    cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
+})
 export class SocketGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
