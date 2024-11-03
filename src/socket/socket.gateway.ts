@@ -27,7 +27,8 @@ export class SocketGateway
   server: Server;
 
   afterInit() {
-    this.logger.log('Initialized');
+    this.logger.log('WebSocket server initialized');
+    this.logger.log(`Listening for connections...`);
   }
 
   async handleConnection(socket: Socket) {
@@ -66,10 +67,14 @@ export class SocketGateway
     this.logger.log(`Number of connected clients: ${sockets.size}`);
   }
 
-  async handleDisconnect() {
-    const { sockets } = this.server.sockets;
-    this.logger.log(`Number of connected clients: ${sockets.size}`);
-  }
+async handleDisconnect(socket: Socket) {
+  const userId = socket.data.userId;
+  const { sockets } = this.server.sockets;
+
+  this.logger.log(`Client disconnected: ${socket.id}`);
+  this.logger.log(`User ID ${userId} from IP ${socket.client.conn.remoteAddress} disconnected`);
+  this.logger.log(`Total connected clients after disconnection: ${sockets.size}`);
+}
 
   @SubscribeMessage('refresh')
   handleRefresh(
