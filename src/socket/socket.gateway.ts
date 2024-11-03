@@ -17,7 +17,11 @@ export class SocketGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
   private readonly logger = new Logger(SocketGateway.name);
-  @WebSocketServer()
+  @WebSocketServer({
+    cors: {
+      origin: '*'
+    }
+  })
   server: Server;
 
   afterInit() {
